@@ -1,0 +1,11 @@
+<ul id="account-menu">
+    <li><a th:href="@{/account}">Account Information</a></li>
+    <li><a th:href="@{/account/orders}">
+		<div th:if="${#httpServletRequest.isUserInRole('ROLE_USER')}" th:remove="tag">View Orders</div>
+		<div th:if="${#httpServletRequest.isUserInRole('ROLE_DOCTOR')}" th:remove="tag">View Appointment</div>
+    </a></li>
+    <li><a th:href="@{/account/password}">Change Password</a></li>
+    <li><a th:href="@{/account/addresses}">Manage Addresses</a></li>
+    <li th:if="${#httpServletRequest.isUserInRole('ROLE_USER')}"><a th:href="@{/account/wishlist}">Manage Wishlist</a></li>
+    <li th:if="${#httpServletRequest.isUserInRole('ROLE_USER')}"><a th:href="@{/contactus}">Contact Us</a></li>
+</ul>

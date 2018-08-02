@@ -1,0 +1,14 @@
+<div layout:decorator="layout/fullPageNoNavLayout" layout:fragment="content">
+	<head>
+		<title>Sorry!</title>
+	</head>
+
+	<div id="order_confirmation">
+		<h2>
+			<span>It seems something goes wrong. Please contact us.</span>
+		</h2>
+		<h3>
+			<span th:utext="${exception}"></span>
+		</h3>
+	</div>
+</div>

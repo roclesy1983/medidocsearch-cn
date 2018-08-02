@@ -1,0 +1,35 @@
+    <script async="async" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+	<script>
+  	(adsbygoogle = window.adsbygoogle || []).push({
+    	google_ad_client: "ca-pub-7980251448708519",
+    	enable_page_level_ads: true
+  	});
+	</script>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+
+    <title th:unless="${pageTitle == 'TEMPLATE'}" th:utext="${#strings.isEmpty(pageTitle) ? 'MediDoc Search' : pageTitle}"></title>
+    
+    <title th:if="${pageTitle == 'TEMPLATE'}" th:remove="tag">
+        <title th:inline="text" th:include="${templateName} :: title" />
+    </title>
+    
+    <meta name="description" content="MediDoc Search: Introduce English Speaking Doctors/Dentists to Foreigners in Japan" />
+    <meta name="author" content="MediDoc Search" />
+
+    <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />   
+    <meta name="viewport" content="width=device-width" />
+    
+    <blc:bundle name="style.css" 
+                mapping-prefix="/css/"
+                files="style.css,
+                       style.min.css,
+                       jquery.rating.css" />
+    
+    <link rel="stylesheet" th:unless="${#strings.isEmpty(additionalCss)}" />
+    <link rel="shortcut icon" type="image/x-icon" href="/img/general_product_weG_icon.ico" />
+    <link rel="icon" type="image/x-icon" href="/img/general_product_weG_icon.ico" />
+
+    <script blc:src="@{/js/libs/modernizr-2.5.3.min.js}"></script>
+    
+    <blc:google_universal_analytics ordernumber="${order?.orderNumber}" />

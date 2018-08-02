@@ -1,0 +1,76 @@
+<th:block layout:decorator="layout/accountLayout" layout:fragment="content">
+    <div th:if="${#httpServletRequest.isUserInRole('ROLE_USER')}">
+        <ul id="order-history" th:unless="${#lists.isEmpty(orders)}">
+            <li>
+                <span class="order-number">Clinic</span>
+                <span class="submit-date">Appt Date</span>
+                <span class="status">Service Status</span>
+                <span class="total">Discount</span>
+            </li>
+            <li class="order" th:each="order : ${orders}" th:object="${order}" th:attr="data-order-number=*{orderNumber}">
+				<div class="order-info-row">
+					<span class="order-number"><a th:href="@{/account/orders/} + *{orderNumber}" class="view-order-details" th:utext="*{discreteOrderItems[0].product.defaultSku.name}"></a></span>
+					<span class="submit-date">
+		                <blc:product_option_display orderItem="${order.discreteOrderItems[0]}" th:remove="tag">
+		                     <ul th:unless="${#lists.isEmpty(productOptionDisplayValues)}" class="productOptions" th:remove="tag">
+		                         <div>
+		                           <span th:utext="'1st: ' + ${productOptionDisplayValues['1st Preferred Date']}"></span>
+		                         </div>
+		                     </ul>
+		                </blc:product_option_display> 
+					</span>
+					<span class="service-status" th:utext="*{serviceStatus.friendlyType}">Processing</span>
+                    <span class="total" th:if="*{discreteOrderItems[0].adjustmentValue.zero}">---</span>
+                    <span class="total" th:unless="*{discreteOrderItems[0].adjustmentValue.zero}" >
+                         <span  align="center"  blc:price="*{discreteOrderItems[0].adjustmentValue}" class="promotion" ></span>
+                         <div th:if="*{#lists.size(discreteOrderItems[0].orderItemPriceDetails)>=1}" >
+                            <div th:each="orderItemPriceDetail : *{discreteOrderItems[0].orderItemPriceDetails}" th:object="${orderItemPriceDetail}">
+                                <div th:each="orderItemPriceDetailAdjustment : ${orderItemPriceDetail.orderItemPriceDetailAdjustments}" th:object="${orderItemPriceDetailAdjustment}" >                   
+                                    <span th:utext="*{offerName}"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </span>
+				</div>
+				<div class="order-details"></div>
+            </li>
+        </ul>
+        
+        <h3 th:if="${#lists.isEmpty(orders)}">You have not placed any orders.</h3>
+    
+    </div>
+    <div th:if="${#httpServletRequest.isUserInRole('ROLE_DOCTOR')}">
+        <ul id="order-history" th:unless="${#lists.isEmpty(orders)}">
+            <li>
+                <span class="appt-number">Patient</span>
+                <span class="submit-date">Appt Date</span>
+                <span class="service-status">Service Status</span>
+                <span class="actions">Actions</span>
+            </li>
+            <li class="order" th:each="order : ${orders}" th:object="${order}" th:attr="data-order-number=*{orderNumber}">
+                <div class="order-info-row">
+					<span class="appt-number"><a th:href="@{/account/orders/} + *{orderNumber}" class="view-order-details" th:utext="*{customer.lastName} + ' ' + *{customer.firstName}"></a></span>
+					<span class="submit-date">
+		                <blc:product_option_display orderItem="${order.discreteOrderItems[0]}" th:remove="tag">
+		                     <ul th:unless="${#lists.isEmpty(productOptionDisplayValues)}" class="productOptions" th:remove="tag">
+		                         <div>
+		                           <span th:utext="'1st: ' + ${productOptionDisplayValues['1st Preferred Date']}"></span>
+		                         </div>
+		                     </ul>
+		                </blc:product_option_display> 
+					</span>
+					<span class="service-status" th:utext="*{serviceStatus.friendlyType}" th:attr="id=*{orderNumber} + _ServiceStatus">Processing</span>
+					<span class="actions">
+						<a th:href="@{/account/orders/complete/} + *{orderNumber}" class="action">Complete</a>
+						<br/>
+						<a th:href="@{/account/orders/cancel/} + *{orderNumber}" class="action">Cancel</a>
+					</span>
+				</div>
+                <div class="order-details"></div>
+			</li>
+        </ul>
+        
+        <h3 th:if="${#lists.isEmpty(orders)}">You have not placed any appointment.</h3>
+    
+    </div>
+</th:block>

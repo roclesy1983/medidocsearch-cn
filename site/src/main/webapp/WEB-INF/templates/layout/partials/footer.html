@@ -1,0 +1,87 @@
+<footer class="group">
+    <div id="left_content">
+        <h4><span th:utext="#{footer.delivering}">Find a Good Doctor</span></h4>
+        <!--&copy; <span th:utext="#{footer.copyrightHC}">Copyright 2018 MediDoc Search</span><br />-->
+        <a href=""><span th:utext="#{footer.privacyPolicy}">Privacy Policy</span></a>
+    </div>
+    <div id="right_content">
+        <h4><span th:utext="#{footer.since1978}">Be Your Health Assistant</span></h4>
+        <!--<span th:utext="#{footer.allRights}">All Rights Reserved</span>.<br />-->
+        <a href=""><span th:utext="#{footer.customerService}">Customer Service</span></a>
+    </div>
+    <div id="blc_brand">
+        <!--<a href="http://www.broadleafcommerce.com"  >
+            <img blc:src="@{/img/broadleaf-seal.png}" alt="Broadleaf Commerce" />
+            <h4><span th:utext="#{footer.branding.poweredByBLC}">Find a Good Doctor</span></h4>
+            <br />
+        </a>-->
+        <p>&copy; <span th:utext="#{footer.branding.copyrightBLC}">Copyright 2018 MediDoc Search. All Rights Reserved.</span><br /></p>
+    </div>
+
+    <div th:remove="all">
+        <!--
+            Include this template at the bottom of a page (automatically included by partials/footer.html
+            to gain access to jQuery and other plugins used throughout the site.
+            
+            We will attempt to load the jQuery library from Google's CDN, but fallback on our own provided
+            jQuery if necessary.
+            
+            Other than this jQuery loading script, no other scripts should be defined inline.
+        -->
+    </div>
+    
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script th:inline="text">
+        //<![CDATA[
+        window.jQuery || document.write('<script src="[[@{/js/lib/jquery-1.9.1.js}]]"><\/script>');
+		$(function () {
+			$('.jstree').jstree().on("click", ".jstree-anchor", function() {
+				document.location.href = this.href;
+				});
+			$(".jstreechk").jstree({
+				"checkbox" : {
+					"keep_selected_style" : false
+					},
+					"plugins" : [ "checkbox" ]
+					}).on('changed.jstree', function(node, action, selected, event) {
+						if (action.node) {
+							// Set the state of the belonging checkbox and children checkboxes recursively
+							childrenNodes = action.instance.get_json(action.node.id, { flat: true });
+							childrenNodes.forEach(function(childNode) {
+								$('#'+childNode.a_attr.id).find('input:checkbox:first').prop('checked', action.node.state.selected);
+								});
+							
+							// Set the state of the parent checkboxes recursively
+							parentNode = action.instance.get_node(action.node.parent);
+							while (parentNode.hasOwnProperty('a_attr')) {
+								$('#'+parentNode.a_attr.id).find('input:checkbox:first').prop('checked', parentNode.state.selected);
+								parentNode = action.instance.get_node(parentNode.parent);
+								}
+							}
+						});
+			});
+        //]]>
+    </script>
+    
+    <blc:bundle name="lib.js" 
+                mapping-prefix="/js/"
+                files="plugins.js,
+                       libs/jquery.MetaData.js,
+                       libs/jquery.mask.min.js,
+                       libs/jquery.rating.pack.js,
+                       libs/jstree.min.js,
+                       libs/jquery.dotdotdot-1.5.1.js" />
+    
+    <blc:bundle name="heatclinic.js" 
+                mapping-prefix="/js/"
+                files="BLC.js,
+                       heatClinic.js,
+                       cartOperations.js,
+                       checkoutOperations.js,
+                       globalOnReady.js,
+                       heatClinicEventHandlers.js,
+                       manageAccountOperations.js,
+                       jssor.slider-20.min.js,
+                       reviewOperations.js" />
+
+</footer>
