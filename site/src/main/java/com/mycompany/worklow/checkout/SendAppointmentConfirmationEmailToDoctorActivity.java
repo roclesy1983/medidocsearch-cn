@@ -73,10 +73,10 @@ public class SendAppointmentConfirmationEmailToDoctorActivity extends BaseActivi
 
 		emailInfo.setFromAddress(fromEmailAddress);
 		emailInfo.setSubject("[Appointment Number:" + order.getOrderNumber() + "]");
-		emailInfo.setMessageBody("-------------------------<br />新しい予約はきました。<br />患者様：" + order.getCustomer().getLastName() + " " + order.getCustomer().getFirstName() + 
-				"<br />予約希望日（月/日 時:分）：<br />" + getDateFromOptions(order.getOrderItems().get(0).getOrderItemAttributes()) + 
-				"<br />症状説明：" + order.getOrderItems().get(0).getOrderItemAttributes().get("Symptom Description").getValue() +
-				"<br />患者様に分かりやすい日本語で返信してください。登録メールのままをお願いします。<br />よろしくお願いします。<br />-------------------------");
+		emailInfo.setMessageBody("-------------------------<br />有新预约了。<br />患者名：" + order.getCustomer().getLastName() + " " + order.getCustomer().getFirstName() + 
+				"<br />预约候选日（月/日 时：分）：<br />" + getDateFromOptions(order.getOrderItems().get(0).getOrderItemAttributes()) + 
+				"<br />病症说明：" + order.getOrderItems().get(0).getOrderItemAttributes().get("Symptom Description").getValue() +
+				"<br />请用登陆的电子邮件地址回复邮件。<br />祝顺利。<br />-------------------------");
 		EmailTargetImpl emailTarget = new EmailTargetImpl();
 		emailTarget.setEmailAddress(clinicEmailAddressTo);
 
@@ -89,7 +89,7 @@ public class SendAppointmentConfirmationEmailToDoctorActivity extends BaseActivi
 	}
 
 	private String getDateFromOptions(Map<String, OrderItemAttribute> options) {
-		return "第一希望日：" + ((OrderItemAttribute) options.get("1st Preferred Date")).getValue() + "<br />第二希望日：" + ((OrderItemAttribute) options.get("2nd Preferred Date")).getValue()+ "<br />第三希望日：" + ((OrderItemAttribute) options.get("3rd Preferred Date")).getValue();
+		return "第一候选日：" + ((OrderItemAttribute) options.get("1st Preferred Date")).getValue() + "<br />第二候选日：" + ((OrderItemAttribute) options.get("2nd Preferred Date")).getValue()+ "<br />第三候选日：" + ((OrderItemAttribute) options.get("3rd Preferred Date")).getValue();
 	}
 
 }

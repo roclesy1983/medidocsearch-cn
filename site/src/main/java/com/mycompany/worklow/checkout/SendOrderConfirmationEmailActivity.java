@@ -93,10 +93,10 @@ public class SendOrderConfirmationEmailActivity extends BaseActivity<ProcessCont
 
 		emailInfo.setFromAddress(fromEmailAddress);
 		emailInfo.setSubject("[Appointment Number:" + order.getOrderNumber() + "]");
-		emailInfo.setMessageBody("-------------------------<br />The appointment is sent to the clinic.<br />The clinic: " + order.getDiscreteOrderItems().get(0).getProduct().getName() + 
-				"<br />The appointed date(Month/Day Hour:Minute): <br />" + getDateFromOptions(order.getOrderItems().get(0).getOrderItemAttributes()) + 
-				"<br />The symptom description: " + order.getOrderItems().get(0).getOrderItemAttributes().get("Symptom Description").getValue() + 
-				"<br />The clinic will send you an email to confirm this appoinment. Please reply this email by your registered email.<br />Thank you.<br />-------------------------");
+		emailInfo.setMessageBody("-------------------------<br />医院已将收到您的就诊预约。<br />医院名：" + order.getDiscreteOrderItems().get(0).getProduct().getName() + 
+				"<br />预约候选日（月/日 时：分）：<br />" + getDateFromOptions(order.getOrderItems().get(0).getOrderItemAttributes()) + 
+				"<br />病症说明：" + order.getOrderItems().get(0).getOrderItemAttributes().get("Symptom Description").getValue() + 
+				"<br />医院稍后会通过邮件向您确认预约事宜，请稍后。请用登陆的电子邮件地址回复邮件。<br />祝安康。<br />-------------------------");
 		EmailTargetImpl emailTarget = new EmailTargetImpl();
 		emailTarget.setEmailAddress(order.getEmailAddress());
 
@@ -109,7 +109,7 @@ public class SendOrderConfirmationEmailActivity extends BaseActivity<ProcessCont
 	}
 
 	private String getDateFromOptions(Map<String, OrderItemAttribute> options) {
-		return "1st Preferred Date: " + ((OrderItemAttribute) options.get("1st Preferred Date")).getValue() + "<br />2nd Preferred Date: " + ((OrderItemAttribute) options.get("2nd Preferred Date")).getValue()+ "<br />3rd Preferred Date: " + ((OrderItemAttribute) options.get("3rd Preferred Date")).getValue();
+		return "第一候选日：" + ((OrderItemAttribute) options.get("1st Preferred Date")).getValue() + "<br />第二候选日：" + ((OrderItemAttribute) options.get("2nd Preferred Date")).getValue()+ "<br />第三候选日：" + ((OrderItemAttribute) options.get("3rd Preferred Date")).getValue();
 	}
 
 }

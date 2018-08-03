@@ -46,7 +46,7 @@
         <property name="host"><value>smtp.gmail.com</value></property>
         <property name="port"><value>587</value></property>
         <property name="protocol"><value>smtp</value></property>
-        <property name="username"><value>medidocsearch@gmail.com</value></property>
+        <property name="username"><value>rcpt.medidoc@gmail.com</value></property>
         <property name="password"><value>medidoc2016</value></property>
         <property name="javaMailProperties">
             <props>
